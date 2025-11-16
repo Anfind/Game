@@ -1,0 +1,132 @@
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+
+const IntroScreen = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="max-w-4xl w-full"
+      >
+        {/* Header */}
+        <motion.div
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+          className="text-center mb-12"
+        >
+          <h1 className="text-6xl font-bold gradient-text mb-4">
+            🚲 Bicycle Negotiation Game
+          </h1>
+          <p className="text-xl text-gray-600">
+            A Strategic Two-Player Negotiation Simulation
+          </p>
+        </motion.div>
+
+        {/* Main Content Card */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="glass-effect rounded-3xl p-8 md:p-12 mb-8"
+        >
+          <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
+            <p className="text-center font-semibold text-2xl text-gray-800 mb-6">
+              Welcome to the Bicycle Negotiation Game!
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6 my-8">
+              {/* Person A */}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="bg-blue-50 rounded-2xl p-6 border-2 border-blue-200"
+              >
+                <div className="text-center">
+                  <div className="text-5xl mb-4">🎡</div>
+                  <h3 className="text-2xl font-bold text-blue-700 mb-2">Person A</h3>
+                  <p className="text-gray-600">
+                    Owns the <span className="font-semibold">bicycle wheels</span>
+                  </p>
+                  <p className="text-3xl font-bold text-blue-600 mt-3">€200</p>
+                </div>
+              </motion.div>
+
+              {/* Person B */}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="bg-purple-50 rounded-2xl p-6 border-2 border-purple-200"
+              >
+                <div className="text-center">
+                  <div className="text-5xl mb-4">🚴</div>
+                  <h3 className="text-2xl font-bold text-purple-700 mb-2">Person B</h3>
+                  <p className="text-gray-600">
+                    Owns the <span className="font-semibold">bicycle frame</span>
+                  </p>
+                  <p className="text-3xl font-bold text-purple-600 mt-3">€600</p>
+                </div>
+              </motion.div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border-2 border-green-200 my-6"
+            >
+              <p className="text-center text-xl">
+                <span className="font-bold text-green-700">Only together</span> can they assemble a complete bicycle and sell it for{' '}
+                <span className="text-3xl font-bold text-green-600">€1,000</span>
+              </p>
+            </motion.div>
+
+            <div className="space-y-4 mt-8">
+              <p className="text-center">
+                They must decide how the <span className="font-bold">€1,000</span> should be divided between them if a negotiation takes place.
+              </p>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="bg-yellow-50 rounded-xl p-4 border-l-4 border-yellow-400"
+              >
+                <p className="text-gray-700">
+                  ⚠️ <span className="font-semibold">Important:</span> For this negotiation, both parties also receive an{' '}
+                  <span className="font-semibold">alternative selling option</span>. If the negotiation fails, this alternative option is automatically activated.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Start Button */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1, type: 'spring', stiffness: 150 }}
+          className="text-center"
+        >
+          <button
+            onClick={() => navigate('/select-group')}
+            className="button-primary inline-flex items-center gap-3 text-xl"
+          >
+            <span>👉</span>
+            <span>Start the Game</span>
+          </button>
+        </motion.div>
+
+        {/* Decorative Elements */}
+        <div className="fixed top-10 left-10 text-6xl opacity-20 animate-float">🚲</div>
+        <div className="fixed bottom-10 right-10 text-6xl opacity-20 animate-float" style={{ animationDelay: '1s' }}>
+          💰
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+export default IntroScreen;

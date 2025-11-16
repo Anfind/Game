@@ -1,0 +1,138 @@
+1. Mục tiêu của trò chơi
+Trò chơi mô phỏng một tình huống đàm phán hai bên, dựa trên thí nghiệm gốc “Fahrrad-Verhandlungsspiel”.
+ Hai người, A và B, mỗi người sở hữu một phần của chiếc xe đạp.
+ Chỉ khi hợp tác, họ mới có thể bán chiếc xe đạp hoàn chỉnh trị giá 1.000 €.
+ Họ phải đàm phán để quyết định cách chia số tiền 1.000 €.
+ Mục tiêu là đạt được thỏa thuận – hoặc thất bại nếu không đạt được thỏa thuận.
+
+2. Màn hình giới thiệu
+Màn hình bắt đầu hiển thị đoạn giới thiệu ban đầu:
+Welcome to the Bicycle Negotiation Game!
+Two people (A and B) each own one component of a bicycle:
+Person A: owns the bicycle wheels (€200)
+
+
+Person B: owns the bicycle frame (€600)
+
+
+Only together can they assemble a complete bicycle and sell it for €1,000.
+ They must decide how the €1,000 should be divided between them if a negotiation takes place.
+For this negotiation, both parties also receive an alternative selling option.
+ If the negotiation fails, this alternative option is automatically activated.
+
+Sau đoạn văn xuất hiện một nút:
+ 👉 “Bắt đầu trò chơi”
+
+3. Phân vai và mã nhận dạng cặp
+Phân vai tự động
+ Khi vào trò chơi, hệ thống tự động phân vai:
+Một người là Người A
+
+
+Một người là Người B
+
+
+Mỗi người chơi nhận một mã ID riêng (ví dụ: Player_0123)
+
+
+Hệ thống ghép ngẫu nhiên hai người thành một cặp đàm phán
+
+
+Mã định danh cặp
+ Mỗi cặp nhận một mã Pair-ID (ví dụ: Pair_01, Pair_02, …).
+ Mã này dùng để xác định hai người chơi nào đã đàm phán với nhau.
+
+4. Nhóm chơi (Nhóm 1–4): riêng biệt 4 nhóm từ đầu để người chơi có thể chọn nhóm 1-4
+Có bốn nhóm riêng biệt, mỗi nhóm quy định phương án bán thay thế khác nhau cho Người B.
+ Người chơi không biết ý nghĩa kinh tế thực sự (BATNA).
+ Họ chỉ thấy câu:
+“Person B has the alternative selling option … €”
+Nhóm
+Người A
+Người B
+1
+0 €
+0 €
+2
+0 €
+300 €
+3
+0 €
+500 €
+4
+0 €
+600 €
+
+
+Người A luôn có giá trị khởi điểm là 0 €.
+
+
+Người B chỉ biết mức tối thiểu mà họ mong muốn, không biết thuật ngữ “BATNA”.
+
+
+Việc phân nhóm được thực hiện trước khi trò chơi bắt đầu.
+
+
+
+5. Quy trình đàm phán
+Loại trò chơi
+ Mô phỏng đàm phán hai bên theo lượt.
+Người A và B lần lượt đưa ra đề nghị và phản hồi.
+Số vòng: Tối đa 10 vòng.
+Cấu trúc một vòng đàm phán
+Bước
+Hành động
+Mô tả
+1
+Người chơi đang giữ lượt (A hoặc B)
+Nhập đề nghị, ví dụ: “A: 400 €, B: 600 €”.
+2
+Người còn lại
+Chọn một trong bốn phản hồi:
+☐ Quá thấp ☐ Chấp nhận ☐ Có đề nghị tốt hơn ☐ Không chấp nhận
+3
+Kết quả vòng
+Nếu “Chấp nhận” hoặc “Không chấp nhận” → kết thúc trò chơi.
+Nếu “Quá thấp” hoặc “Có đề nghị tốt hơn” → đổi lượt.
+
+Điều kiện kết thúc
+Một bên chọn “Chấp nhận” → đàm phán thành công.
+
+
+Một bên chọn “Không chấp nhận” → đàm phán thất bại.
+
+
+Hết 10 vòng mà chưa thống nhất → tự động thất bại.
+
+
+
+6. Các lựa chọn phản hồi (Hành động)
+Bốn phản hồi theo mẫu gốc:
+Too low – That is too low for me, counteroffer.
+
+
+Accept – The offer is accepted, end of game.
+
+
+Better offer – I have a better offer outside the negotiation.
+
+
+Not accept – Negotiation is terminated, end of game.
+7. Màn hình hiển thị cuối - Result
+If sucessful:
+Negotiation successful!  
+Final distribution:  
+Person A: ___ €  
+Person B: ___ €  
+If failed
+Negotiation failed.  
+No agreement reached.  
+Person A receives 0 €  
+Person B receives their minimum demand (0 / 300 / 500 / 600 €) (tùy từng round)
+
+
+
+Mỗi hành động được ghi lại trong vòng tương ứng.
+Khi game kết thúc, hệ thống xuất tự động toàn bộ dữ liệu ra file Excel (.xlsx).
+Một hàng tương ứng một lượt (round).
+
