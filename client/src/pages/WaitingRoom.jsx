@@ -48,10 +48,17 @@ const WaitingRoom = () => {
     socket.on('waiting_for_pair', (data) => {
       console.log('Waiting for pair:', data.message);
     });
+    
+    // Listen for reconnection success
+    socket.on('reconnected', (data) => {
+      console.log('Reconnected to active game:', data);
+      navigate('/negotiate');
+    });
 
     return () => {
       socket.off('pair_found');
       socket.off('waiting_for_pair');
+      socket.off('reconnected');
     };
   }, [socket, playerId, navigate]);
 

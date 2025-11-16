@@ -223,6 +223,39 @@ export const setupSocketHandlers = (io) => {
       }
     });
 
+    // Handle reconnection
+    socket.on('reconnect_player', async (data) => {
+      try {
+        const { playerId } = data;
+        const player = await Player.findOne({ playerId });
+        
+        if (player) {
+          // Update socket ID
+          player.socketId = socket.id;
+          await player.save();
+          activeConnections.set(playerId, socket.id);
+          
+          // If player has a pair, rejoin the game
+          if (player.pairId) {
+            const game = await Game.findOne({ pairId: player.pairId });
+            if (game && game.status === 'active') {
+              socket.emit('reconnected', {
+                pairId: player.pairId,
+                role: player.role,
+                batna: player.role === 'A' ? game.playerA.batna : game.playerB.batna,
+                currentTurn: game.currentTurn,
+                currentRound: game.currentRound,
+                groupNumber: game.groupNumber
+              });
+              console.log(`🔄 Player reconnected: ${playerId}`);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error in reconnect_player:', error);
+      }
+    });
+
     // Handle disconnection
     socket.on('disconnect', async () => {
       console.log(`❌ Client disconnected: ${socket.id}`);
@@ -232,21 +265,26 @@ export const setupSocketHandlers = (io) => {
         if (socketId === socket.id) {
           activeConnections.delete(playerId);
           
-          // Optionally handle game cleanup
           try {
             const player = await Player.findOne({ playerId });
-            if (player && player.pairId) {
-              // Notify opponent about disconnection
-              const game = await Game.findOne({ pairId: player.pairId });
-              if (game && game.status === 'active') {
-                const opponentId = player.role === 'A' ? game.playerB.playerId : game.playerA.playerId;
-                const opponentSocketId = activeConnections.get(opponentId);
-                
-                if (opponentSocketId) {
-                  io.to(opponentSocketId).emit('opponent_disconnected', {
-                    message: 'Your opponent has disconnected'
-                  });
+            if (player) {
+              if (player.pairId) {
+                // Player has a pair - notify opponent
+                const game = await Game.findOne({ pairId: player.pairId });
+                if (game && game.status === 'active') {
+                  const opponentId = player.role === 'A' ? game.playerB.playerId : game.playerA.playerId;
+                  const opponentSocketId = activeConnections.get(opponentId);
+                  
+                  if (opponentSocketId) {
+                    io.to(opponentSocketId).emit('opponent_disconnected', {
+                      message: 'Your opponent has disconnected'
+                    });
+                  }
                 }
+              } else if (player.isWaiting) {
+                // Player was waiting but never paired - delete from DB
+                await Player.deleteOne({ playerId });
+                console.log(`🗑️  Removed waiting player: ${playerId}`);
               }
             }
           } catch (error) {

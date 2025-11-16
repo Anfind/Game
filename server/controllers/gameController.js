@@ -58,10 +58,18 @@ export const findPair = async (playerId) => {
     const waitingPlayer = await Player.findOne({
       groupNumber: currentPlayer.groupNumber,
       isWaiting: true,
-      playerId: { $ne: playerId }
+      playerId: { $ne: playerId },
+      socketId: { $exists: true, $ne: null }
     });
 
     if (!waitingPlayer) {
+      return null;
+    }
+    
+    // Extra validation: ensure player still exists and is valid
+    if (!waitingPlayer.socketId) {
+      // Clean up invalid player
+      await Player.deleteOne({ playerId: waitingPlayer.playerId });
       return null;
     }
 
