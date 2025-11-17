@@ -99,13 +99,7 @@ const GroupSelection = () => {
 
                 <div className="space-y-4 mt-6">
                   <div className="bg-white/70 backdrop-blur rounded-xl p-4">
-                    <p className="text-sm text-gray-600 mb-2">Group Configuration</p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {group.id === 1 && "Equal negotiation (No alternatives)"}
-                      {group.id === 2 && "Moderate advantage for one side"}
-                      {group.id === 3 && "Strong advantage for one side"}
-                      {group.id === 4 && "Very strong advantage for one side"}
-                    </p>
+                    <p className="text-2xl font-bold text-gray-800">Click to Join</p>
                   </div>
                 </div>
 
