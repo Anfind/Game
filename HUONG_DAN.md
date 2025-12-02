@@ -97,9 +97,9 @@ Mỗi nhóm có "**giá trị thay thế**" (BATNA) khác nhau cho Person B:
 | Nhóm | Person A | Person B | Giải thích |
 |------|----------|----------|------------|
 | **1** | 0€ | 0€ | Cả 2 đều không có lựa chọn khác |
-| **2** | 0€ | 300€ | B có thể bán riêng được 300€ |
+| **2** | 0€ | 250€ | B có thể bán riêng được 250€ |
 | **3** | 0€ | 500€ | B có thể bán riêng được 500€ |
-| **4** | 0€ | 600€ | B có thể bán riêng được 600€ |
+| **4** | 0€ | 750€ | B có thể bán riêng được 750€ |
 
 **Lưu ý:**
 - Nếu đàm phán **thành công** → Chia theo thỏa thuận

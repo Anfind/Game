@@ -19,7 +19,7 @@ const WaitingRoom = () => {
 
   useEffect(() => {
     if (!socket || !playerId) {
-      navigate('/select-group');
+      navigate('/');
       return;
     }
 
@@ -159,7 +159,7 @@ const WaitingRoom = () => {
           className="mt-8"
         >
           <button
-            onClick={() => navigate('/select-group')}
+            onClick={() => navigate('/')}
             className="button-secondary"
           >
             Cancel & Go Back

@@ -48,9 +48,9 @@ Bảng giá trị phương án thay thế (BATNA) theo nhóm:
 | Nhóm | Phương án thay thế (A) | Phương án thay thế (B) |
 | :--- | :--- | :--- |
 | 1 | 0 € | 0 € |
-| 2 | 0 € | 300 € |
+| 2 | 0 € | 250 € |
 | 3 | 0 € | 500 € |
-| 4 | 0 € | 600 € |
+| 4 | 0 € | 750 € |
 
 ## 5. 🔄 Luồng đàm phán (Negotiation Flow)
 
@@ -100,7 +100,7 @@ Trò chơi có 2 trạng thái kết thúc:
     > No agreement reached.
 * **Kết quả chi trả (Payout):**
     * Người A: Nhận **0 €**.
-    * Người B: Nhận mức **tối thiểu (BATNA)** của họ, tùy theo nhóm đã chọn ở đầu game (0 €, 300 €, 500 €, hoặc 600 €).
+    * Người B: Nhận mức **tối thiểu (BATNA)** của họ, tùy theo nhóm đã chọn ở đầu game (0 €, 250 €, 500 €, hoặc 750 €).
 
 ## 7. 💾 Yêu cầu về Dữ liệu (Data Requirements)
 

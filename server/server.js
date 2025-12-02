@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import connectDB from './config/db.js';
 import gameRoutes from './routes/gameRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 import { setupSocketHandlers } from './socket/socketHandlers.js';
 
 dotenv.config();
@@ -33,6 +34,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/game', gameRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Serve static files in production
 const __dirname = path.resolve();

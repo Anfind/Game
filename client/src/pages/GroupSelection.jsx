@@ -7,9 +7,9 @@ import { toast } from 'react-toastify';
 
 const groups = [
   { id: 1, batnaA: 0, batnaB: 0, color: 'from-blue-400 to-blue-600', bgColor: 'bg-blue-50', borderColor: 'border-blue-300' },
-  { id: 2, batnaA: 0, batnaB: 300, color: 'from-green-400 to-green-600', bgColor: 'bg-green-50', borderColor: 'border-green-300' },
+  { id: 2, batnaA: 0, batnaB: 250, color: 'from-green-400 to-green-600', bgColor: 'bg-green-50', borderColor: 'border-green-300' },
   { id: 3, batnaA: 0, batnaB: 500, color: 'from-orange-400 to-orange-600', bgColor: 'bg-orange-50', borderColor: 'border-orange-300' },
-  { id: 4, batnaA: 0, batnaB: 600, color: 'from-red-400 to-red-600', bgColor: 'bg-red-50', borderColor: 'border-red-300' },
+  { id: 4, batnaA: 0, batnaB: 750, color: 'from-red-400 to-red-600', bgColor: 'bg-red-50', borderColor: 'border-red-300' },
 ];
 
 const GroupSelection = () => {
@@ -36,10 +36,10 @@ const GroupSelection = () => {
         setGroupNumber(response.player.groupNumber);
         setGameStatus('waiting');
         
-        toast.success('Joined successfully! Finding a partner...');
+        toast.success('Group selected! Let me show you the game rules...');
         
-        // Navigate to waiting room
-        navigate('/waiting');
+        // Navigate to intro screen first
+        navigate('/intro');
       }
     } catch (error) {
       console.error('Error joining game:', error);
@@ -138,20 +138,26 @@ const GroupSelection = () => {
           </div>
         </motion.div>
 
-        {/* Back Button */}
+        {/* Note about next step */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
           className="text-center mt-8"
         >
-          <button
-            onClick={() => navigate('/')}
-            disabled={loading}
-            className="button-secondary"
-          >
-            ← Back to Introduction
-          </button>
+          <p className="text-gray-600 text-sm">
+            After selecting a group, you'll see the game introduction before joining the waiting room.
+          </p>
+          
+          {/* Admin Link */}
+          <div className="mt-4">
+            <button
+              onClick={() => navigate('/admin')}
+              className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              🔐 Admin Access
+            </button>
+          </div>
         </motion.div>
       </motion.div>
     </div>

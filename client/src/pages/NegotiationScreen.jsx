@@ -58,13 +58,40 @@ const NegotiationScreen = () => {
   const [isWaitingResponse, setIsWaitingResponse] = useState(false);
   const [pendingOffer, setPendingOffer] = useState(null);
   const [showResponseModal, setShowResponseModal] = useState(false);
+  const [opponentBatna, setOpponentBatna] = useState(null);
 
   const isMyTurn = role === currentTurn;
   const maxRounds = 10;
 
+  // Auto set offer values based on current turn
+  useEffect(() => {
+    if (currentTurn === 'A') {
+      setOfferA(1000);
+      setOfferB(0);
+    } else if (currentTurn === 'B') {
+      setOfferA(0);
+      setOfferB(1000);
+    }
+  }, [currentTurn]);
+
+  // Get opponent BATNA when component mounts
+  useEffect(() => {
+    if (socket && pairId) {
+      socket.emit('get_opponent_batna', { pairId, playerId });
+      
+      socket.on('opponent_batna', (data) => {
+        setOpponentBatna(data.batna);
+      });
+
+      return () => {
+        socket.off('opponent_batna');
+      };
+    }
+  }, [socket, pairId, playerId]);
+
   useEffect(() => {
     if (!socket || !playerId || !role || !pairId) {
-      navigate('/select-group');
+      navigate('/');
       return;
     }
 
@@ -105,6 +132,15 @@ const NegotiationScreen = () => {
       setShowResponseModal(false);
       setPendingOffer(null);
 
+      // Auto set offer to 1000 for current turn player
+      if (data.currentTurn === 'A') {
+        setOfferA(1000);
+        setOfferB(0);
+      } else if (data.currentTurn === 'B') {
+        setOfferA(0);
+        setOfferB(1000);
+      }
+
       if (data.currentTurn === role) {
         toast.info("It's your turn now!");
       }
@@ -132,7 +168,7 @@ const NegotiationScreen = () => {
     socket.on('opponent_disconnected', (data) => {
       toast.error(data.message);
       setTimeout(() => {
-        navigate('/select-group');
+        navigate('/');
       }, 3000);
     });
 
@@ -217,6 +253,9 @@ const NegotiationScreen = () => {
               <p className="text-sm text-gray-500 mb-1">Your Role</p>
               <p className="text-2xl font-bold text-blue-600">Person {role}</p>
               <p className="text-xs text-gray-500 mt-1">Alternative: €{batna}</p>
+              <p className="text-xs text-orange-600 font-medium mt-1">
+                You have the alternative selling option €{batna}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500 mb-1">Round</p>
@@ -231,6 +270,11 @@ const NegotiationScreen = () => {
             <div>
               <p className="text-sm text-gray-500 mb-1">Current Turn</p>
               <p className="text-2xl font-bold text-green-600">Person {currentTurn}</p>
+              {opponentBatna !== null && (
+                <p className="text-xs text-red-600 font-medium mt-1">
+                  Opponent's alternative: €{opponentBatna}
+                </p>
+              )}
               {isMyTurn ? (
                 <motion.p
                   animate={{ scale: [1, 1.1, 1] }}
@@ -346,7 +390,6 @@ const NegotiationScreen = () => {
 
               {!isMyTurn && !showResponseModal && (
                 <div className="text-center text-gray-500">
-                  <div className="text-5xl mb-3">⏳</div>
                   <p>Waiting for Person {currentTurn} to make an offer...</p>
                 </div>
               )}
@@ -360,8 +403,7 @@ const NegotiationScreen = () => {
               animate={{ opacity: 1, x: 0 }}
               className="glass-effect rounded-2xl p-6 sticky top-4"
             >
-              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <span>📜</span>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">
                 Negotiation History
               </h3>
 

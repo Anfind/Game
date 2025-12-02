@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 const ResultScreen = () => {
   const navigate = useNavigate();
-  const { gameResult, role, pairId, rounds, batna } = useGame();
+  const { gameResult, role, pairId, rounds, batna, resetGame } = useGame();
   const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
@@ -37,7 +37,8 @@ const ResultScreen = () => {
 
   const handlePlayAgain = () => {
     // Reset game state and go back to group selection
-    navigate('/select-group');
+    resetGame();
+    navigate('/');
   };
 
   return (
@@ -240,6 +241,16 @@ const ResultScreen = () => {
               </>
             )}
           </button>
+
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSd8B3JQk8ajKUJJZc_n545zIwnYyKdbQLFSfNDyZv__RXWLSg/viewform?usp=publish-editor"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 inline-flex items-center gap-2"
+          >
+            <span>📋</span>
+            <span>Survey / Feedback</span>
+          </a>
 
           <button
             onClick={handlePlayAgain}

@@ -223,6 +223,35 @@ export const setupSocketHandlers = (io) => {
       }
     });
 
+    // Get opponent BATNA
+    socket.on('get_opponent_batna', async (data) => {
+      try {
+        const { pairId, playerId } = data;
+        
+        const game = await Game.findOne({ pairId });
+        if (!game) {
+          socket.emit('error', { message: 'Game not found' });
+          return;
+        }
+
+        const player = await Player.findOne({ playerId });
+        if (!player) {
+          socket.emit('error', { message: 'Player not found' });
+          return;
+        }
+
+        // Get opponent's BATNA
+        const opponentBatna = player.role === 'A' ? game.playerB.batna : game.playerA.batna;
+        
+        socket.emit('opponent_batna', {
+          batna: opponentBatna
+        });
+      } catch (error) {
+        console.error('Error getting opponent BATNA:', error);
+        socket.emit('error', { message: 'Failed to get opponent BATNA' });
+      }
+    });
+
     // Handle reconnection
     socket.on('reconnect_player', async (data) => {
       try {

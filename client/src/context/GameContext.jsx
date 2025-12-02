@@ -117,6 +117,27 @@ export const GameProvider = ({ children }) => {
     };
   }, []);
 
+  const resetGame = () => {
+    // Reset all game state but keep socket connection
+    setPlayerId(null);
+    setRole(null);
+    setPairId(null);
+    setGroupNumber(null);
+    setBatna(0);
+    setCurrentTurn(null);
+    setCurrentRound(1);
+    setGameStatus('idle');
+    setRounds([]);
+    setGameResult(null);
+    
+    // Clear localStorage
+    localStorage.removeItem('playerId');
+    localStorage.removeItem('role');
+    localStorage.removeItem('pairId');
+    localStorage.removeItem('groupNumber');
+    localStorage.removeItem('batna');
+  };
+
   const value = {
     socket,
     playerId,
@@ -138,7 +159,8 @@ export const GameProvider = ({ children }) => {
     rounds,
     setRounds,
     gameResult,
-    setGameResult
+    setGameResult,
+    resetGame
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

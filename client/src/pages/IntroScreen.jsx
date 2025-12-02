@@ -143,14 +143,14 @@ const IntroScreen = () => {
           )}
           
           <button
-            onClick={() => navigate('/select-group')}
+            onClick={() => navigate('/waiting')}
             disabled={!isConnected}
             className={`button-primary inline-flex items-center gap-3 text-xl ${
               !isConnected ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
             <span>👉</span>
-            <span>{isConnected ? 'Start the Game' : 'Waiting for Server...'}</span>
+            <span>{isConnected ? 'Continue to Waiting Room' : 'Waiting for Server...'}</span>
           </button>
           
           {isConnected && (
@@ -162,6 +162,20 @@ const IntroScreen = () => {
               ✅ Connected and ready!
             </motion.p>
           )}
+          
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2 }}
+            className="mt-6"
+          >
+            <button
+              onClick={() => navigate('/')}
+              className="button-secondary"
+            >
+              ← Back to Group Selection
+            </button>
+          </motion.div>
         </motion.div>
 
         {/* Decorative Elements */}

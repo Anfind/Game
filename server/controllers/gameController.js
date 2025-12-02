@@ -6,9 +6,9 @@ import { nanoid } from 'nanoid';
 const getBATNA = (groupNumber) => {
   const batnaMap = {
     1: { A: 0, B: 0 },
-    2: { A: 0, B: 300 },
+    2: { A: 0, B: 250 },
     3: { A: 0, B: 500 },
-    4: { A: 0, B: 600 }
+    4: { A: 0, B: 750 }
   };
   return batnaMap[groupNumber];
 };

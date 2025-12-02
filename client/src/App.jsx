@@ -6,6 +6,8 @@ import GroupSelection from './pages/GroupSelection';
 import WaitingRoom from './pages/WaitingRoom';
 import NegotiationScreen from './pages/NegotiationScreen';
 import ResultScreen from './pages/ResultScreen';
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
 import { GameProvider } from './context/GameContext';
 
 function App() {
@@ -14,11 +16,13 @@ function App() {
       <Router>
         <div className="min-h-screen">
           <Routes>
-            <Route path="/" element={<IntroScreen />} />
-            <Route path="/select-group" element={<GroupSelection />} />
+            <Route path="/" element={<GroupSelection />} />
+            <Route path="/intro" element={<IntroScreen />} />
             <Route path="/waiting" element={<WaitingRoom />} />
             <Route path="/negotiate" element={<NegotiationScreen />} />
             <Route path="/result" element={<ResultScreen />} />
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
           </Routes>
           <ToastContainer
             position="top-right"
